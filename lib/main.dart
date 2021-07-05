@@ -1,4 +1,4 @@
-import 'package:beamin_clone/controllers/controller.dart';
+import 'package:beamin_clone/controllers/login_controller.dart';
 import 'package:beamin_clone/screen/home.dart';
 import 'package:beamin_clone/service/root_service.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ class _RootState extends State<Root> {
 
   void initControllers() {
     final services = initServices();
-    Get.put(Controller(rootService: services));
+    Get.put(LoginController(rootService: services));
   }
 
   List<GetPage> renderPages() {
@@ -40,7 +40,7 @@ class _RootState extends State<Root> {
         page: () => Home(),
         transition: Transition.noTransition,
         binding: BindingsBuilder(() {
-          Get.put(Controller(rootService: services));
+          Get.put(LoginController(rootService: services));
         }),
       ),
     ];

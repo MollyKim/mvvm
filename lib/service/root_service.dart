@@ -1,3 +1,4 @@
+import 'package:beamin_clone/service/login/login_service.dart';
 import 'package:beamin_clone/utils/logger_utils.dart';
 import 'package:beamin_clone/utils/network_utils.dart';
 import 'package:dio/dio.dart';
@@ -11,6 +12,10 @@ class RootService {
         onError: onErrorWrapper,
       ),
     );
+
+  LoginService loginService;
+
+  RootService() : this.loginService = LoginService(_dio);
 
   static parseBody(dynamic data) {
     try {
@@ -34,22 +39,22 @@ class RootService {
     } catch (e) {
       customLogger.e(
         '이 에러가 난다면 해결 또는 헬프요청. 실행에는 영향 없음.'
-            '\n$e',
+        '\n$e',
       );
     }
   }
 
   static onErrorWrapper(
-      DioError error,
-      ErrorInterceptorHandler handler,
-      ) async {
+    DioError error,
+    ErrorInterceptorHandler handler,
+  ) async {
     if (LOG_HTTP_REQUESTS) {
       customLogger.d(
         '!!!!!!!!!!ERROR THROWN WITH FOLLOWING LOG!!!!!!!!!!\n'
-            'path: ${error.requestOptions.baseUrl}${error.requestOptions.path}\n'
-            'status code: ${error.response?.statusCode ?? ''}\n'
-            'body: ${error.response?.data.toString() ?? ''}\n'
-            'headers: ${error.response?.headers ?? ''}',
+        'path: ${error.requestOptions.baseUrl}${error.requestOptions.path}\n'
+        'status code: ${error.response?.statusCode ?? ''}\n'
+        'body: ${error.response?.data.toString() ?? ''}\n'
+        'headers: ${error.response?.headers ?? ''}',
       );
     }
 
@@ -59,15 +64,15 @@ class RootService {
   }
 
   static onResponseWrapper(
-      Response resp,
-      ResponseInterceptorHandler handler,
-      ) async {
+    Response resp,
+    ResponseInterceptorHandler handler,
+  ) async {
     if (LOG_HTTP_REQUESTS) {
       customLogger.d(
         '!!!!!!!!!!RESPONSE RECEIVED WITH FOLLOWING LOG!!!!!!!!!!\n'
-            'path: ${resp.requestOptions.baseUrl}${resp.requestOptions.path}\n'
-            'body: ${resp.data}\n'
-            'headers: ${resp.headers}',
+        'path: ${resp.requestOptions.baseUrl}${resp.requestOptions.path}\n'
+        'body: ${resp.data}\n'
+        'headers: ${resp.headers}',
       );
     }
 
@@ -75,11 +80,12 @@ class RootService {
   }
 
   static onRequestWrapper(
-      RequestOptions options,
-      RequestInterceptorHandler handler,
-      ) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     if (options.headers.containsKey('content-type')) {
-      final ct = options.headers['content-type'];
+      // final ct = options.headers['content-type'];
+      final ct = options.headers['multipart/form-data; boundary=<calculated when request is sent>'];
 
       options.contentType = ct;
     }
