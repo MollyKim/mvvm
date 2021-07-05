@@ -1,3 +1,4 @@
+import 'package:beamin_clone/controllers/counter_controller.dart';
 import 'package:beamin_clone/controllers/login_controller.dart';
 import 'package:beamin_clone/screen/home.dart';
 import 'package:beamin_clone/service/root_service.dart';
@@ -40,7 +41,7 @@ class _RootState extends State<Root> {
         page: () => Home(),
         transition: Transition.noTransition,
         binding: BindingsBuilder(() {
-          Get.put(LoginController(rootService: services));
+          Get.put(CounterController());
         }),
       ),
     ];
@@ -49,7 +50,7 @@ class _RootState extends State<Root> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'BeaminClone',
+      title: 'FlutterStudy',
       initialRoute: '/',
       debugShowCheckedModeBanner: false,
       getPages: renderPages(),
