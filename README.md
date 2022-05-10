@@ -1,4 +1,3 @@
-# 퐁당퐁당
 
 ## 코딩규칙
 코딩 규칙은 Google 팀의 pedantic 룰을 따른다. [여기에서](https://pub.dev/packages/pedantic)
